@@ -18,14 +18,19 @@ Commands and usage
 
 :Turbidity                                                          *:Turbidity*
 
-  Turn turbidity on and off.
+  Toggle turbidity on and off.
 
-There is also a |<Plug>| mapping available for use in mappings: >
-  <Plug>Turbidity
+  This command has a |<Plug>| mapping available, if that's your preferred way
+  of specifying mappings: >
+    <Plug>Turbidity
 <
-An example mapping: >
-  nmap <Leader>t <Plug>Turbidity
+  An example mapping: >
+    nmap <Leader>t <Plug>Turbidity
 <
+:Turbidity!
+
+  Turn turbidity off.
+
 ==============================================================================
 Options                                                      *turbidity-options*
 
