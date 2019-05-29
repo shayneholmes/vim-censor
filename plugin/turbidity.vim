@@ -21,6 +21,9 @@ function! s:TurbidityObscure()
     let l:not_character = "^" . l:character
   endif
 
+  let l:show_first = get(b:, "turbidity_show_first",
+        \ get(g:, "turbidity_show_first", s:default_show_first))
+
   let b:turbidity_obscured=1
   let b:turbidity_saved_syntax=&l:syntax
   let b:turbidity_saved_conceallevel=&l:conceallevel
@@ -29,10 +32,11 @@ function! s:TurbidityObscure()
   setlocal conceallevel=1
   setlocal concealcursor=nvic
   exec "syntax match Turbidity '[" . l:character . "]' conceal"
-  if get(b:, "turbidity_show_first",
-        \ get(g:, "turbidity_show_first", s:default_show_first))
-    exec "syntax match Turbidity '[" . l:not_character . "][" . l:character . "]'"
-    exec "syntax match Turbidity '^[" . l:character . "]'"
+  if l:show_first
+    exec "syntax match Turbidity '[" . l:not_character . "]" .
+          \ "[" . l:character . "]\\{1," . l:show_first . "}'"
+    exec "syntax match Turbidity '^" .
+          \ "[" . l:character . "]\\{1," . l:show_first . "}'"
   endif
 endf
 

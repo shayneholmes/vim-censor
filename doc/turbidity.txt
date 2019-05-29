@@ -56,8 +56,8 @@ g:turbidity_show_first                                  *g:turbidity_show_first*
   Type: |Number|
   Default: `0`
 
-  When set to 1, the first character in an obscured character group will be
-  shown. This gives a little extra context when obscured.
+  When set to {n}, the first {n} characters in an obscured character group
+  (usually a word) will be shown. This gives extra context when obscured.
 
 ==============================================================================
 Inspirations
