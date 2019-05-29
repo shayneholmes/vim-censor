@@ -67,6 +67,9 @@ g:turbidity_show_last                                   *g:turbidity_show_last*
   When set to {n}, the last {n} characters in an obscured character group
   (usually a word) will be shown. This gives extra context when obscured.
 
+  Warning: Avoid this option if you can, because it is `SLOW` -- the regular
+  expressions underneath are terribly inefficient.
+
 ==============================================================================
 Inspirations
 
