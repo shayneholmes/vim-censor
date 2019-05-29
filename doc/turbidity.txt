@@ -1,4 +1,4 @@
-*turbidity.txt*   Clouds over your words
+*turbidity.txt*   Obscure your words
 *turbidity*
 
 Author: Shayne Holmes <http://shayneholm.es/>
@@ -7,10 +7,10 @@ Repo:   https://github.com/shayneholmes/vim-turbidity
 ==============================================================================
 Introduction                                            *turbidity-introduction*
 
-Turbidity clouds over (obscures) your words, so you can see the shape of them,
-but not read them. It uses vim's native |conceal| feature to physically hide
-the characters, as opposed to highlighting them the same color as the
-background. When the words are obscured, you can't even copy them out of
+Turbidity obscures your words, so you can see the shape of them, but not read
+them. It uses vim's native |conceal| feature to physically hide the
+characters, as opposed to camouflaging them by printing them the same color as
+the background. When the words are obscured, you can't even copy them out of
 the terminal.
 
 ==============================================================================
