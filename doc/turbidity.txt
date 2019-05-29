@@ -1,0 +1,55 @@
+*turbidity.txt*   Clouds over your words
+*turbidity*
+
+Author: Shayne Holmes <http://shayneholm.es/>
+Repo:   https://github.com/shayneholmes/vim-turbidity
+
+==============================================================================
+Introduction                                            *turbidity-introduction*
+
+Turbidity clouds over your letters
+
+==============================================================================
+Commands and usage
+
+Turbidity                                                            *Turbidity*
+
+  Turn turbidity on and off.
+
+There is also a |<Plug>| mapping available for use in mappings: >
+  <Plug>Turbidity
+<
+An example mapping: >
+  nmap <Leader>t <Plug>Turbidity
+<
+==============================================================================
+Options                                                      *turbidity-options*
+
+Most options can be configured for an individual buffer by prefixing them
+with |b:| instead of |g:|.
+
+g:turbidity_show_first                                  *g:turbidity_show_first*
+                                                        *b:turbidity_show_first*
+  Type: Number
+  Default: 0
+
+  When set to 1, the first character in an obscured character group will be
+  shown. This gives a little extra context when obscured.
+
+g:turbidity_character                                    *g:turbidity_character*
+                                                         *b:turbidity_character*
+  Type: String
+  Default: '0-9a-zA-Z'
+
+  A collection of characters to be obscured, as used in a |/collection|.
+
+  Some useful non-default values: >
+
+    " Obscure every character but whitespace
+    let g:turbidity_character='^ \t'
+
+    " Obscure more international characters
+    let g:turbidity_character='a-zA-ZçÇâÂàÀéÉêÊèÈîÎôÔûÛùÙœ'
+<
+
+vim:tw=78:sw=2:ts=2:et:ft=help:norl:nowrap:
