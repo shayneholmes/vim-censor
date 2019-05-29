@@ -47,6 +47,7 @@ function! s:TurbidityObscure()
   if l:show_last
     exec "syntax match Turbidity '" .
           \ "[" . l:character . "]\\{1," . l:show_last . "}" .
+          \ "\\ze" .
           \ "[" . l:not_character . "]" .
           \ "'"
     exec "syntax match Turbidity '" .
