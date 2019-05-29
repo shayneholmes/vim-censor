@@ -8,8 +8,8 @@ let g:turbidity_loaded = 1
 let s:default_character='0-9a-zA-Z_'
 let s:default_show_first=0
 
-function! s:TurbidityHide()
-  if exists("b:turbidity_hidden")
+function! s:TurbidityObscure()
+  if exists("b:turbidity_obscured")
     return
   endif
 
@@ -21,7 +21,7 @@ function! s:TurbidityHide()
     let l:not_character = "^" . l:character
   endif
 
-  let b:turbidity_hidden=1
+  let b:turbidity_obscured=1
   let b:turbidity_saved_syntax=&l:syntax
   let b:turbidity_saved_conceallevel=&l:conceallevel
   let b:turbidity_saved_concealcursor=&l:concealcursor
@@ -36,11 +36,11 @@ function! s:TurbidityHide()
   endif
 endf
 
-function! s:TurbidityUnhide()
-  if !exists("b:turbidity_hidden")
+function! s:TurbidityElucidate()
+  if !exists("b:turbidity_obscured")
     return
   endif
-  unlet b:turbidity_hidden
+  unlet b:turbidity_obscured
   let &l:syntax=b:turbidity_saved_syntax
   let &l:conceallevel=b:turbidity_saved_conceallevel
   let &l:concealcursor=b:turbidity_saved_concealcursor
@@ -51,10 +51,10 @@ function! s:TurbidityUnhide()
 endf
 
 function! s:TurbidityToggle()
-  if exists("b:turbidity_hidden")
-    call <SID>TurbidityUnhide()
+  if exists("b:turbidity_obscured")
+    call <SID>TurbidityElucidate()
   else
-    call <SID>TurbidityHide()
+    call <SID>TurbidityObscure()
   endif
 endf
 
