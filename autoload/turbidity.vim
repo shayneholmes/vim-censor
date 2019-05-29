@@ -23,6 +23,7 @@
 let s:default_character='0-9a-zA-Z_'
 let s:default_show_first=0
 let s:default_show_last=0
+let s:default_concealcursor='nvic'
 
 function! s:TurbidityObscure()
   if exists("b:turbidity_obscured")
@@ -38,6 +39,9 @@ function! s:TurbidityObscure()
         \ get(g:, "turbidity_show_last", s:default_show_last))
   let l:min_match_size = 1 + l:show_first + l:show_last
 
+  let l:concealcursor = get(b:, "turbidity_concealcursor",
+        \ get(g:, "turbidity_concealcursor", s:default_concealcursor))
+
   let b:turbidity_obscured=1
   let b:turbidity_restore={
         \ 'syntax': &l:syntax,
@@ -46,7 +50,7 @@ function! s:TurbidityObscure()
         \}
   setlocal syntax=text
   setlocal conceallevel=1
-  setlocal concealcursor=nvic
+  let &l:concealcursor=l:concealcursor
   exec "syntax match TurbidityWord"
         \ "'[" . l:character . "]\\{" . l:min_match_size . ",\\}'" .
         \ "ms=s+" . l:show_first .

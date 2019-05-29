@@ -72,6 +72,24 @@ g:turbidity_show_last                                   *g:turbidity_show_last*
   When set to {n}, the last {n} characters in an obscured character group
   (usually a word) will be shown. This gives extra context when obscured.
 
+g:turbidity_concealcursor                            *g:turbidity_concealcursor*
+                                                     *b:turbidity_concealcursor*
+  Type: |String|
+  Default: `'nvic'`
+
+  Modes in which the cursor line will be concealed.
+
+  By default, the current line is obscured, even when you're editing it.
+  However, there are alternatives: >
+
+    " Show the current line when inserting and in visual mode
+    let g:turbidity_concealcursor='nc'
+
+    " Always show the current line
+    let g:turbidity_concealcursor=''
+<
+  See 'concealcursor'.
+
 ==============================================================================
 Inspirations
 
