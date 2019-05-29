@@ -58,7 +58,6 @@ function! s:TurbidityObscure()
         \ "contains=TurbidityChar"
         \ "oneline"
   syntax match TurbidityChar contained '.' conceal
-  syntax cluster Turbidity contains=TurbidityWord,TurbidityChar
 endf
 
 function! s:TurbidityElucidate()
@@ -70,7 +69,7 @@ function! s:TurbidityElucidate()
   let &l:conceallevel=b:turbidity_restore['conceallevel']
   let &l:concealcursor=b:turbidity_restore['concealcursor']
   unlet b:turbidity_restore
-  syntax clear Turbidity
+  syntax clear TurbidityChar TurbidityWord
 endf
 
 function! turbidity#toggle(bang)
