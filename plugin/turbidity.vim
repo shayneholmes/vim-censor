@@ -16,16 +16,12 @@ function! s:TurbidityObscure()
 
   let l:character=get(b:, "turbidity_character",
         \ get(g:, "turbidity_character", s:default_character))
-  if l:character =~ '^\^'
-    let l:not_character = strpart(l:character, 1)
-  else
-    let l:not_character = "^" . l:character
-  endif
 
   let l:show_first = get(b:, "turbidity_show_first",
         \ get(g:, "turbidity_show_first", s:default_show_first))
   let l:show_last = get(b:, "turbidity_show_last",
         \ get(g:, "turbidity_show_last", s:default_show_last))
+  let l:min_match_size = 1 + l:show_first + l:show_last
 
   let b:turbidity_obscured=1
   let b:turbidity_saved_syntax=&l:syntax
@@ -34,26 +30,14 @@ function! s:TurbidityObscure()
   setlocal syntax=text
   setlocal conceallevel=1
   setlocal concealcursor=nvic
-  exec "syntax match Turbidity '[" . l:character . "]' conceal"
-  if l:show_first
-    exec "syntax match Turbidity '" .
-          \ "[" . l:not_character . "]" .
-          \ "[" . l:character . "]\\{1," . l:show_first . "}" .
-          \ "'"
-    exec "syntax match Turbidity '^" .
-          \ "[" . l:character . "]\\{1," . l:show_first . "}" .
-          \ "'"
-  endif
-  if l:show_last
-    exec "syntax match Turbidity '" .
-          \ "[" . l:character . "]\\{1," . l:show_last . "}" .
-          \ "\\ze" .
-          \ "[" . l:not_character . "]" .
-          \ "'"
-    exec "syntax match Turbidity '" .
-          \ "[" . l:character . "]\\{1," . l:show_last . "}" .
-          \ "$'"
-  endif
+  exec "syntax match TurbidityWord"
+        \ "'[" . l:character . "]\\{" . l:min_match_size . ",\\}'" .
+        \ "ms=s+" . l:show_first .
+        \ ",me=e-" . l:show_last
+        \ "contains=TurbidityChar"
+        \ "oneline"
+  syntax match TurbidityChar contained '.' conceal
+  syntax cluster Turbidity contains=TurbidityWord,TurbidityChar
 endf
 
 function! s:TurbidityElucidate()
