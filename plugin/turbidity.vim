@@ -5,7 +5,7 @@ if &cp || !has("conceal") || exists("g:turbidity_loaded")
 endif
 let g:turbidity_loaded = 1
 
-let s:default_character='0-9a-zA-Z'
+let s:default_character='0-9a-zA-Z_'
 let s:default_show_first=0
 
 function! s:TurbidityHide()

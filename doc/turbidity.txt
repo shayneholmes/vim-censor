@@ -39,7 +39,7 @@ g:turbidity_show_first                                  *g:turbidity_show_first*
 g:turbidity_character                                    *g:turbidity_character*
                                                          *b:turbidity_character*
   Type: String
-  Default: '0-9a-zA-Z'
+  Default: `'0-9a-zA-Z_'` (equivalent to |\w|)
 
   A collection of characters to be obscured, as used in a |/collection|.
 
