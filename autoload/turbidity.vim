@@ -24,6 +24,7 @@ let s:default_character='0-9a-zA-Z_'
 let s:default_show_first=0
 let s:default_show_last=0
 let s:default_concealcursor='nvic'
+let s:default_conceal_char=v:null
 
 function! s:TurbidityObscure()
   if exists("b:turbidity_obscured")
@@ -42,6 +43,14 @@ function! s:TurbidityObscure()
   let l:concealcursor = get(b:, "turbidity_concealcursor",
         \ get(g:, "turbidity_concealcursor", s:default_concealcursor))
 
+  let l:conceal_char = get(b:, "turbidity_conceal_char",
+        \ get(g:, "turbidity_conceal_char", s:default_conceal_char))
+  if empty(l:conceal_char)
+    let l:conceal_char_def = ''
+  else
+    let l:conceal_char_def = 'cchar=' . l:conceal_char
+  endif
+
   let b:turbidity_obscured=1
   let b:turbidity_restore={
         \ 'syntax': &l:syntax,
@@ -57,7 +66,8 @@ function! s:TurbidityObscure()
         \ ",me=e-" . l:show_last
         \ "contains=TurbidityChar"
         \ "oneline"
-  syntax match TurbidityChar contained '.' conceal
+  exec "syntax match TurbidityChar contained '.' conceal"
+        \ l:conceal_char_def
 endf
 
 function! s:TurbidityElucidate()

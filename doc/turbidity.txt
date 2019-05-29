@@ -90,6 +90,16 @@ g:turbidity_concealcursor                            *g:turbidity_concealcursor*
 <
   See 'concealcursor'.
 
+g:turbidity_conceal_char                              *g:turbidity_conceal_char*
+                                                      *b:turbidity_conceal_char*
+  Type: |String| (only one character)
+  Default: None (|v:null|)
+
+  The character that will be used in place of obscured characters. If not
+  specified, the default conceal character in 'listchars' will be used.
+
+  See |:syn-cchar|.
+
 ==============================================================================
 Inspirations
 
