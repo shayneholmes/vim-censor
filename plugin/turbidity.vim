@@ -24,9 +24,11 @@ function! s:TurbidityObscure()
   let l:min_match_size = 1 + l:show_first + l:show_last
 
   let b:turbidity_obscured=1
-  let b:turbidity_saved_syntax=&l:syntax
-  let b:turbidity_saved_conceallevel=&l:conceallevel
-  let b:turbidity_saved_concealcursor=&l:concealcursor
+  let b:turbidity_restore={
+        \ 'syntax': &l:syntax,
+        \ 'conceallevel': &l:conceallevel,
+        \ 'concealcursor': &l:concealcursor,
+        \}
   setlocal syntax=text
   setlocal conceallevel=1
   setlocal concealcursor=nvic
@@ -45,12 +47,10 @@ function! s:TurbidityElucidate()
     return
   endif
   unlet b:turbidity_obscured
-  let &l:syntax=b:turbidity_saved_syntax
-  let &l:conceallevel=b:turbidity_saved_conceallevel
-  let &l:concealcursor=b:turbidity_saved_concealcursor
-  unlet b:turbidity_saved_syntax
-  unlet b:turbidity_saved_conceallevel
-  unlet b:turbidity_saved_concealcursor
+  let &l:syntax=b:turbidity_restore['syntax']
+  let &l:conceallevel=b:turbidity_restore['conceallevel']
+  let &l:concealcursor=b:turbidity_restore['concealcursor']
+  unlet b:turbidity_restore
   syntax clear Turbidity
 endf
 
