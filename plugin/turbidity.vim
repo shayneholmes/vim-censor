@@ -7,6 +7,7 @@ let g:turbidity_loaded = 1
 
 let s:default_character='0-9a-zA-Z_'
 let s:default_show_first=0
+let s:default_show_last=0
 
 function! s:TurbidityObscure()
   if exists("b:turbidity_obscured")
@@ -23,6 +24,8 @@ function! s:TurbidityObscure()
 
   let l:show_first = get(b:, "turbidity_show_first",
         \ get(g:, "turbidity_show_first", s:default_show_first))
+  let l:show_last = get(b:, "turbidity_show_last",
+        \ get(g:, "turbidity_show_last", s:default_show_last))
 
   let b:turbidity_obscured=1
   let b:turbidity_saved_syntax=&l:syntax
@@ -33,10 +36,22 @@ function! s:TurbidityObscure()
   setlocal concealcursor=nvic
   exec "syntax match Turbidity '[" . l:character . "]' conceal"
   if l:show_first
-    exec "syntax match Turbidity '[" . l:not_character . "]" .
-          \ "[" . l:character . "]\\{1," . l:show_first . "}'"
+    exec "syntax match Turbidity '" .
+          \ "[" . l:not_character . "]" .
+          \ "[" . l:character . "]\\{1," . l:show_first . "}" .
+          \ "'"
     exec "syntax match Turbidity '^" .
-          \ "[" . l:character . "]\\{1," . l:show_first . "}'"
+          \ "[" . l:character . "]\\{1," . l:show_first . "}" .
+          \ "'"
+  endif
+  if l:show_last
+    exec "syntax match Turbidity '" .
+          \ "[" . l:character . "]\\{1," . l:show_last . "}" .
+          \ "[" . l:not_character . "]" .
+          \ "'"
+    exec "syntax match Turbidity '" .
+          \ "[" . l:character . "]\\{1," . l:show_last . "}" .
+          \ "$'"
   endif
 endf
 
