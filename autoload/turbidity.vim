@@ -70,14 +70,7 @@ function! s:TurbidityElucidate()
 endf
 
 function! turbidity#toggle(bang)
-  if a:bang
-    if exists("b:turbidity_obscured")
-      call <SID>TurbidityElucidate()
-    endif
-    return
-  endif
-
-  if exists("b:turbidity_obscured")
+  if a:bang || exists("b:turbidity_obscured")
     call <SID>TurbidityElucidate()
   else
     call <SID>TurbidityObscure()
