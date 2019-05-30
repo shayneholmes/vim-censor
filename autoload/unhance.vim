@@ -20,37 +20,31 @@
 " FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 " IN THE SOFTWARE.
 
-let s:default_character='0-9a-zA-Z_'
-let s:default_show_first=0
-let s:default_show_last=0
-let s:default_concealcursor='nvic'
-let s:default_conceal_char=v:null
+let s:unhance_character='0-9a-zA-Z_'
+let s:unhance_show_first=0
+let s:unhance_show_last=0
+let s:unhance_concealcursor='nvic'
+let s:unhance_conceal_char=v:null
+
+function! s:getSetting(name)
+  return get(g:, a:name,
+        \ get(b:, a:name,
+        \ get(s:, a:name)))
+endfunction
 
 function! s:Unhance()
   if exists('b:unhanced')
     return
   endif
 
-  let l:character=
-        \ get(b:, 'unhance_character',
-        \ get(g:, 'unhance_character',
-        \ s:default_character))
+  let l:character = s:getSetting('unhance_character')
 
-  let l:show_first =
-        \ get(b:, 'unhance_show_first',
-        \ get(g:, 'unhance_show_first',
-        \ s:default_show_first))
-  let l:show_last =
-        \ get(b:, 'unhance_show_last',
-        \ get(g:, 'unhance_show_last',
-        \ s:default_show_last))
+  let l:show_first = s:getSetting('unhance_show_first')
+  let l:show_last = s:getSetting('unhance_show_last')
   let l:min_match_size = 1 + l:show_first + l:show_last
 
-  let l:concealcursor = get(b:, 'unhance_concealcursor',
-        \ get(g:, 'unhance_concealcursor', s:default_concealcursor))
-
-  let l:conceal_char = get(b:, 'unhance_conceal_char',
-        \ get(g:, 'unhance_conceal_char', s:default_conceal_char))
+  let l:concealcursor = s:getSetting('unhance_concealcursor')
+  let l:conceal_char = s:getSetting('unhance_conceal_char')
   if empty(l:conceal_char)
     let l:conceal_char_def = ''
   else
