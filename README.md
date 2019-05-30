@@ -1,12 +1,12 @@
-# Turbidity
+# Unhance
 
-Turbidity obscures your words, so you can see the shape of them, but not read
+Unhance obscures your words, so you can see the shape of them, but not read
 them.
 
-![](https://raw.github.com/shayneholmes/i/master/turbidity-before.png)
-![](https://raw.github.com/shayneholmes/i/master/turbidity-after.png)
+![](https://raw.github.com/shayneholmes/i/master/unhance-before.png)
+![](https://raw.github.com/shayneholmes/i/master/unhance-after.png)
 
-Turbidity uses vim's native `conceal` feature to physically hide the
+Unhance uses vim's native `conceal` feature to physically hide the
 characters, as opposed to camouflaging them by printing them the same color as
 the background. When the words are obscured, you can't even copy them out of
 the terminal.
@@ -16,37 +16,37 @@ the terminal.
 Use your favorite plugin manager.
 
 - [vim-plug](https://github.com/junegunn/vim-plug)
-  1. Add `Plug 'shayneholmes/vim-turbidity'` to .vimrc
+  1. Add `Plug 'shayneholmes/vim-unhance'` to .vimrc
   2. Run `:PlugInstall`
 
 ## Usage
 
-### `:Turbidity`
+### `:Unhance`
 
-  Toggle turbidity on and off.
+  Toggle unhance on and off.
 
   This command has a `<Plug>` mapping available, if that's your preferred way
   of specifying mappings:
 
-    <Plug>Turbidity
+    <Plug>Unhance
 
   An example mapping:
 
-    nmap <Leader>t <Plug>Turbidity
+    nmap <Leader>u <Plug>Unhance
 
-### `:Turbidity!`
+### `:Unhance!`
 
-  Turn turbidity off.
+  Turn unhance off.
 
 ## Options
 
-Options don't immediately take effect: If you change an option while turbidity
-is on, you'll need to turn turbidity off and on again to see any change.
+Options don't immediately take effect: If you change an option while unhance
+is on, you'll need to turn unhance off and on again to see any change.
 
 Most options can be configured for an individual buffer by prefixing them with
 `b:` instead of `g:`.
 
-### `g:turbidity_character`
+### `g:unhance_character`
 
   - Type: `String`
   - Default: `'0-9a-zA-Z_'` (equivalent to `\w`)
@@ -56,12 +56,12 @@ Most options can be configured for an individual buffer by prefixing them with
   Some useful non-default values:
 
     " Obscure every character but whitespace
-    let g:turbidity_character='^ \t'
+    let g:unhance_character='^ \t'
 
     " Obscure more international characters
-    let g:turbidity_character='a-zA-ZçÇâÂàÀéÉêÊèÈîÎôÔûÛùÙœ'
+    let g:unhance_character='a-zA-ZçÇâÂàÀéÉêÊèÈîÎôÔûÛùÙœ'
 
-### `g:turbidity_show_first`
+### `g:unhance_show_first`
 
   - Type: `Number`
   - Default: `0`
@@ -69,14 +69,14 @@ Most options can be configured for an individual buffer by prefixing them with
   When set to {n}, the first {n} characters in an obscured character group
   (usually a word) will be shown. This gives extra context when obscured.
 
-### `g:turbidity_show_last`
+### `g:unhance_show_last`
   - Type: `Number`
   - Default: `0`
 
   When set to {n}, the last {n} characters in an obscured character group
   (usually a word) will be shown. This gives extra context when obscured.
 
-### `g:turbidity_concealcursor`
+### `g:unhance_concealcursor`
 
   - Type: `String`
   - Default: `'nvic'`
@@ -87,14 +87,14 @@ Most options can be configured for an individual buffer by prefixing them with
   However, there are alternatives:
 
     " Show the current line when inserting and in visual mode
-    let g:turbidity_concealcursor='nc'
+    let g:unhance_concealcursor='nc'
 
     " Always show the current line
-    let g:turbidity_concealcursor=''
+    let g:unhance_concealcursor=''
 
   See 'concealcursor'.
 
-### `g:turbidity_conceal_char`
+### `g:unhance_conceal_char`
 
   - Type: `String` (only one character)
   - Default: None (`v:null`)
