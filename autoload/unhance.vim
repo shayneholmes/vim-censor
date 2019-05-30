@@ -20,6 +20,7 @@
 " FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 " IN THE SOFTWARE.
 
+" declare defaults
 let s:unhance_character='0-9a-zA-Z_'
 let s:unhance_show_first=0
 let s:unhance_show_last=0
@@ -29,7 +30,8 @@ let s:unhance_conceal_char=v:null
 function! s:getSetting(name)
   return get(g:, a:name,
         \ get(b:, a:name,
-        \ get(s:, a:name)))
+        \ get(s:, a:name,
+        \ v:null)))
 endfunction
 
 function! s:createSyntaxRules()
