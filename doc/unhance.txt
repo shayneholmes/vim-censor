@@ -20,12 +20,8 @@ Commands and usage
 
   Toggle unhance on and off.
 
-  This command has a |<Plug>| mapping available, if that's your preferred way
-  of specifying mappings: >
-    <Plug>Unhance
-<
-  An example mapping: >
-    nmap <Leader>u <Plug>Unhance
+  You can easily map a keypress to it: >
+    nnoremap <Leader>u :Unhance<CR>
 <
 :Unhance!
 

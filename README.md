@@ -25,14 +25,9 @@ Use your favorite plugin manager.
 
   Toggle unhance on and off.
 
-  This command has a `<Plug>` mapping available, if that's your preferred way
-  of specifying mappings:
+  You can easily map a keypress to it:
 
-    <Plug>Unhance
-
-  An example mapping:
-
-    nmap <Leader>u <Plug>Unhance
+    nnoremap <Leader>u :Unhance<CR>
 
 ### `:Unhance!`
 

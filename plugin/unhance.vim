@@ -28,6 +28,5 @@ endif
 let g:unhance_loaded = 1
 
 command! -bang Unhance call unhance#execute(<bang>0)
-noremap <script> <Plug>Unhance :Unhance<CR>
 
 " vim: et ts=2 sts=0 sw=0
