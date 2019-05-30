@@ -27,24 +27,30 @@ let s:default_concealcursor='nvic'
 let s:default_conceal_char=v:null
 
 function! s:Unhance()
-  if exists("b:unhanced")
+  if exists('b:unhanced')
     return
   endif
 
-  let l:character=get(b:, "unhance_character",
-        \ get(g:, "unhance_character", s:default_character))
+  let l:character=
+        \ get(b:, 'unhance_character',
+        \ get(g:, 'unhance_character',
+        \ s:default_character))
 
-  let l:show_first = get(b:, "unhance_show_first",
-        \ get(g:, "unhance_show_first", s:default_show_first))
-  let l:show_last = get(b:, "unhance_show_last",
-        \ get(g:, "unhance_show_last", s:default_show_last))
+  let l:show_first =
+        \ get(b:, 'unhance_show_first',
+        \ get(g:, 'unhance_show_first',
+        \ s:default_show_first))
+  let l:show_last =
+        \ get(b:, 'unhance_show_last',
+        \ get(g:, 'unhance_show_last',
+        \ s:default_show_last))
   let l:min_match_size = 1 + l:show_first + l:show_last
 
-  let l:concealcursor = get(b:, "unhance_concealcursor",
-        \ get(g:, "unhance_concealcursor", s:default_concealcursor))
+  let l:concealcursor = get(b:, 'unhance_concealcursor',
+        \ get(g:, 'unhance_concealcursor', s:default_concealcursor))
 
-  let l:conceal_char = get(b:, "unhance_conceal_char",
-        \ get(g:, "unhance_conceal_char", s:default_conceal_char))
+  let l:conceal_char = get(b:, 'unhance_conceal_char',
+        \ get(g:, 'unhance_conceal_char', s:default_conceal_char))
   if empty(l:conceal_char)
     let l:conceal_char_def = ''
   else
@@ -60,18 +66,18 @@ function! s:Unhance()
   setlocal syntax=text
   setlocal conceallevel=1
   let &l:concealcursor=l:concealcursor
-  exec "syntax match UnhanceWord"
-        \ "'[" . l:character . "]\\{" . l:min_match_size . ",\\}'" .
-        \ "ms=s+" . l:show_first .
-        \ ",me=e-" . l:show_last
-        \ "contains=UnhanceChar"
-        \ "oneline"
+  exec 'syntax match UnhanceWord'
+        \ '"[' . l:character . ']\{' . l:min_match_size . ',\}"' .
+        \ 'ms=s+' . l:show_first .
+        \ ',me=e-' . l:show_last
+        \ 'contains=UnhanceChar'
+        \ 'oneline'
   exec "syntax match UnhanceChar contained '.' conceal"
         \ l:conceal_char_def
 endf
 
 function! s:UnhanceRevert()
-  if !exists("b:unhanced")
+  if !exists('b:unhanced')
     return
   endif
   unlet b:unhanced
@@ -83,7 +89,7 @@ function! s:UnhanceRevert()
 endf
 
 function! unhance#execute(bang)
-  if a:bang || exists("b:unhanced")
+  if a:bang || exists('b:unhanced')
     call <SID>UnhanceRevert()
   else
     call <SID>Unhance()

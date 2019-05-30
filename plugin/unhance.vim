@@ -22,7 +22,7 @@
 
 scriptencoding utf-8
 
-if &cp || !has("conceal") || exists("g:unhance_loaded")
+if &compatible || !has('conceal') || exists('g:unhance_loaded')
   finish
 endif
 let g:unhance_loaded = 1
