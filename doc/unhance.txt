@@ -5,7 +5,7 @@ Author: Shayne Holmes <http://shayneholm.es/>
 Repo:   https://github.com/shayneholmes/vim-unhance
 
 ==============================================================================
-Introduction                                            *unhance-introduction*
+Introduction                                              *unhance-introduction*
 
 Unhance obscures your words, so you can see the shape of them, but not read
 them. It uses vim's native |conceal| feature to physically hide the
@@ -16,7 +16,7 @@ the terminal.
 ==============================================================================
 Commands and usage
 
-:Unhance                                                          *:Unhance*
+:Unhance                                                              *:Unhance*
 
   Toggle unhance on and off.
 
@@ -28,7 +28,7 @@ Commands and usage
   Turn unhance off.
 
 ==============================================================================
-Options                                                      *unhance-options*
+Options                                                        *unhance-options*
 
 Options don't immediately take effect: If you change an option while unhance
 is on, you'll need to turn unhance off and on again to see any change.
@@ -36,8 +36,8 @@ is on, you'll need to turn unhance off and on again to see any change.
 Most options can be configured for an individual buffer by prefixing them with
 |b:| instead of |g:|.
 
-g:unhance_character                                    *g:unhance_character*
-                                                         *b:unhance_character*
+g:unhance_character                                        *g:unhance_character*
+                                                           *b:unhance_character*
   Type: |String|
   Default: `'0-9a-zA-Z_'` (equivalent to |\w|)
 
@@ -52,24 +52,24 @@ g:unhance_character                                    *g:unhance_character*
     let g:unhance_character='a-zA-ZçÇâÂàÀéÉêÊèÈîÎôÔûÛùÙœ'
 <
 
-g:unhance_show_first                                  *g:unhance_show_first*
-                                                        *b:unhance_show_first*
+g:unhance_show_first                                      *g:unhance_show_first*
+                                                          *b:unhance_show_first*
   Type: |Number|
   Default: `0`
 
   When set to {n}, the first {n} characters in an obscured character group
   (usually a word) will be shown. This gives extra context when obscured.
 
-g:unhance_show_last                                    *g:unhance_show_last*
-                                                         *b:unhance_show_last*
+g:unhance_show_last                                        *g:unhance_show_last*
+                                                           *b:unhance_show_last*
   Type: |Number|
   Default: `0`
 
   When set to {n}, the last {n} characters in an obscured character group
   (usually a word) will be shown. This gives extra context when obscured.
 
-g:unhance_concealcursor                            *g:unhance_concealcursor*
-                                                     *b:unhance_concealcursor*
+g:unhance_concealcursor                               *g:unhance_concealcursor*
+                                                      *b:unhance_concealcursor*
   Type: |String|
   Default: `'nvic'`
 
@@ -86,8 +86,8 @@ g:unhance_concealcursor                            *g:unhance_concealcursor*
 <
   See 'concealcursor'.
 
-g:unhance_conceal_char                              *g:unhance_conceal_char*
-                                                      *b:unhance_conceal_char*
+ g:unhance_conceal_char                                 *g:unhance_conceal_char*
+                                                        *b:unhance_conceal_char*
   Type: |String| (only one character)
   Default: None (|v:null|)
 
