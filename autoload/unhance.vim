@@ -26,8 +26,8 @@ let s:default_show_last=0
 let s:default_concealcursor='nvic'
 let s:default_conceal_char=v:null
 
-function! s:UnhanceObscure()
-  if exists("b:unhance_obscured")
+function! s:Unhance()
+  if exists("b:unhanced")
     return
   endif
 
@@ -51,7 +51,7 @@ function! s:UnhanceObscure()
     let l:conceal_char_def = 'cchar=' . l:conceal_char
   endif
 
-  let b:unhance_obscured=1
+  let b:unhanced=1
   let b:unhance_restore={
         \ 'syntax': &l:syntax,
         \ 'conceallevel': &l:conceallevel,
@@ -70,11 +70,11 @@ function! s:UnhanceObscure()
         \ l:conceal_char_def
 endf
 
-function! s:UnhanceElucidate()
-  if !exists("b:unhance_obscured")
+function! s:UnhanceRevert()
+  if !exists("b:unhanced")
     return
   endif
-  unlet b:unhance_obscured
+  unlet b:unhanced
   let &l:syntax=b:unhance_restore['syntax']
   let &l:conceallevel=b:unhance_restore['conceallevel']
   let &l:concealcursor=b:unhance_restore['concealcursor']
@@ -82,10 +82,10 @@ function! s:UnhanceElucidate()
   syntax clear UnhanceChar UnhanceWord
 endf
 
-function! unhance#toggle(bang)
-  if a:bang || exists("b:unhance_obscured")
-    call <SID>UnhanceElucidate()
+function! unhance#execute(bang)
+  if a:bang || exists("b:unhanced")
+    call <SID>UnhanceRevert()
   else
-    call <SID>UnhanceObscure()
+    call <SID>Unhance()
   endif
 endf
