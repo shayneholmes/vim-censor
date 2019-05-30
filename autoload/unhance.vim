@@ -32,11 +32,7 @@ function! s:getSetting(name)
         \ get(s:, a:name)))
 endfunction
 
-function! s:Unhance()
-  if exists('b:unhanced')
-    return
-  endif
-
+function! s:createSyntaxRules()
   let l:character = s:getSetting('unhance_character')
 
   let l:show_first = s:getSetting('unhance_show_first')
@@ -51,15 +47,6 @@ function! s:Unhance()
     let l:conceal_char_def = 'cchar=' . l:conceal_char
   endif
 
-  let b:unhanced=1
-  let b:unhance_restore={
-        \ 'syntax': &l:syntax,
-        \ 'conceallevel': &l:conceallevel,
-        \ 'concealcursor': &l:concealcursor,
-        \}
-  setlocal syntax=text
-  setlocal conceallevel=1
-  let &l:concealcursor=l:concealcursor
   exec 'syntax match UnhanceWord'
         \ '"[' . l:character . ']\{' . l:min_match_size . ',\}"' .
         \ 'ms=s+' . l:show_first .
@@ -68,24 +55,48 @@ function! s:Unhance()
         \ 'oneline'
   exec "syntax match UnhanceChar contained '.' conceal"
         \ l:conceal_char_def
-endf
+endfunction
 
-function! s:UnhanceRevert()
-  if !exists('b:unhanced')
-    return
-  endif
-  unlet b:unhanced
+function! s:saveSettings()
+  let b:unhance_restore={
+        \ 'syntax': &l:syntax,
+        \ 'conceallevel': &l:conceallevel,
+        \ 'concealcursor': &l:concealcursor,
+        \}
+endfunction
+
+function! s:restoreSettings()
   let &l:syntax=b:unhance_restore['syntax']
   let &l:conceallevel=b:unhance_restore['conceallevel']
   let &l:concealcursor=b:unhance_restore['concealcursor']
   unlet b:unhance_restore
+endfunction
+
+function! s:activate()
+  let b:unhance_active = 1
+  call s:saveSettings()
+  setlocal syntax=text
+  setlocal conceallevel=1
+  let &l:concealcursor='nciv'
+  call s:createSyntaxRules()
+endfunction
+
+function! s:deactivate()
+  unlet b:unhance_active
   syntax clear UnhanceChar UnhanceWord
-endf
+  call s:restoreSettings()
+endfunction
 
 function! unhance#execute(bang)
-  if a:bang || exists('b:unhanced')
-    call <SID>UnhanceRevert()
+  if a:bang
+    if get(b:, 'unhance_active', 0)
+      call s:deactivate()
+    endif
   else
-    call <SID>Unhance()
+    if get(b:, 'unhance_active', 0)
+      call s:deactivate()
+    else
+      call s:activate()
+    endif
   endif
-endf
+endfunction
