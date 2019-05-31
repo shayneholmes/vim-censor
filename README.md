@@ -102,7 +102,7 @@ See `:help :syn-cchar`.
 
 ### `g:censor_concealcursor` (default: `'nciv'`)
 
-Modes in which the cursor's current line will be concealed.
+Modes in which the cursor's current line will be censored.
 
 By default, censored items in the current line remain censored, even when
 you're in insert mode. However, there are alternatives:
@@ -119,7 +119,7 @@ See vim's `concealcursor` for details.
 
 ## Appearance
 
-Adjusting what concealed text looks like is beyond the scope of this plugin,
+Adjusting what censored text looks like is beyond the scope of this plugin,
 but vim has its own resources to help with that; see `:help hl-Conceal`.
 
 A couple of recipes:
