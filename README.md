@@ -89,8 +89,8 @@ with `w:` or `b:` instead of `g:`.
 A regular expression that specifies what should be censored. It is always
 interpreted as though `'magic'` is set; see `:help :syn-pattern`.
 
-This is the main option to adjust to get different censoring behavior; see
-[Recipes](#recipes), above.
+Change this to get different censoring behavior; see [Recipes](#recipes),
+above.
 
 ### `g:censor_conceal_char` (default: none)
 
