@@ -27,14 +27,14 @@ let s:unhance_show_last=0
 let s:unhance_concealcursor='nvic'
 let s:unhance_conceal_char=v:null
 
-function! s:getSetting(name)
+function! s:getSetting(name) abort
   return get(g:, a:name,
         \ get(b:, a:name,
         \ get(s:, a:name,
         \ v:null)))
 endfunction
 
-function! s:createSyntaxRules()
+function! s:createSyntaxRules() abort
   let l:character = s:getSetting('unhance_character')
 
   let l:show_first = s:getSetting('unhance_show_first')
@@ -59,7 +59,7 @@ function! s:createSyntaxRules()
         \ l:conceal_char_def
 endfunction
 
-function! s:saveSettings()
+function! s:saveSettings() abort
   let b:unhance_restore={
         \ 'syntax': &l:syntax,
         \ 'conceallevel': &l:conceallevel,
@@ -67,14 +67,14 @@ function! s:saveSettings()
         \}
 endfunction
 
-function! s:restoreSettings()
+function! s:restoreSettings() abort
   let &l:syntax=b:unhance_restore['syntax']
   let &l:conceallevel=b:unhance_restore['conceallevel']
   let &l:concealcursor=b:unhance_restore['concealcursor']
   unlet b:unhance_restore
 endfunction
 
-function! s:activate()
+function! s:activate() abort
   let b:unhance_active = 1
   call s:saveSettings()
   setlocal syntax=text
@@ -83,13 +83,13 @@ function! s:activate()
   call s:createSyntaxRules()
 endfunction
 
-function! s:deactivate()
+function! s:deactivate() abort
   unlet b:unhance_active
   syntax clear UnhanceChar UnhanceWord
   call s:restoreSettings()
 endfunction
 
-function! unhance#execute(bang)
+function! unhance#execute(bang) abort
   if a:bang
     if get(b:, 'unhance_active', 0)
       call s:deactivate()
