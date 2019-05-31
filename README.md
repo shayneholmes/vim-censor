@@ -38,12 +38,12 @@ nnoremap <Leader>c :Censor<CR>
 
 Turn censor off.
 
-## <a name="recipes"></a> Recipes
+## Recipes <a name="recipes"></a>
 
 Ready-made recipes for interesting censorship patterns:
 
 ```vim
-" Censor letters and numbers (default)
+" Censor word characters: letters, numbers, and _ (default)
 "
 "  Foo bar, hash.    ███ ███, ████.
 "    Baz (quux)?  ->   ███ (████)?
