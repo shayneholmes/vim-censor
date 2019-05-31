@@ -1,118 +1,132 @@
-# Unhance
+# Censor
 
-Unhance obscures your words, so you can see the shape of them, but not read
-them.
+Hide words from view.
 
-![](https://raw.github.com/shayneholmes/i/master/unhance-before.png)
-![](https://raw.github.com/shayneholmes/i/master/unhance-after.png)
+![](https://raw.github.com/shayneholmes/i/master/censor.png)
 
-Unhance uses vim's native `conceal` feature to physically hide the
-characters, as opposed to camouflaging them by printing them the same color as
-the background. When the words are obscured, you can't even copy them out of
-the terminal.
+Censor blocks out the specified patterns: they're there, and you can see
+they're there, but you can't read them.
+
+Instead of "camouflaging" them by making them the same color as the background,
+it uses vim's native `conceal` feature to replace the characters at render
+time: When words are censored, they won't be displayed on the terminal at all.
+
+Note that the buffer is never changed: the underlying text is the same
+regardless of whether or not censor is enabled.
 
 ## Installation
 
 Use your favorite plugin manager.
 
-- [vim-plug](https://github.com/junegunn/vim-plug)
-  1. Add `Plug 'shayneholmes/vim-unhance'` to .vimrc
-  2. Run `:PlugInstall`
+### [vim-plug](https://github.com/junegunn/vim-plug)
+
+1. Add `Plug 'shayneholmes/vim-censor'` to .vimrc
+2. Run `:PlugInstall`
 
 ## Usage
 
-### `:Unhance`
+### `:Censor`
 
-  Toggle unhance on and off.
+Toggle censor on and off.
 
-  You can easily map a keypress to it:
+You can easily map a keypress to it:
 
-    nnoremap <Leader>u :Unhance<CR>
+```vim
+nnoremap <Leader>c :Censor<CR>
+```
 
-### `:Unhance!`
+### `:Censor!`
 
-  Turn unhance off.
+Turn censor off.
 
 ## Options
 
-Options don't immediately take effect: If you change an option while unhance
-is on, you'll need to turn unhance off and on again to see any change.
+Options don't immediately take effect: If you change an option while censor is
+on, you'll need to turn censor off and on again to see any change.
 
-Most options can be configured for an individual buffer by prefixing them with
-`b:` instead of `g:`.
+Options can be configured for an individual window or buffer by prefixing them
+with `w:` or `b:` instead of `g:`. (Note that highlight groups are global, so
+you can't change them per buffer.)
 
-### `g:unhance_character`
+### `g:censor_pattern` (default: `'\w\+'`)
 
-  - Type: `String`
-  - Default: `'0-9a-zA-Z_'` (equivalent to `\w`)
+Regular expression that specifies what should be censored.
 
-  A collection of characters to be obscured, as used in a `/collection`.
+Some interesting recipes:
 
-  Some interesting recipes:
+```vim
+" Censor letters and numbers (default)
+"
+"  Foo bar, hash.    XXX XXX, XXXX.
+"    Baz (quux)?  ->   XXX (XXXX)?
+"    Hashbaz!          XXXXXXX!
+"
+let g:censor_pattern='\w\+'
 
-    " Block letters and numbers (default)
-    "
-    "  Foo bar, hash.    XXX XXX, XXXX.
-    "    Baz (quux)?  ->   XXX (XXXX)?
-    "    Hashbaz!          XXXXXXX!
-    "
-    let g:unhance_pattern='\w\+'
+" Show the first and last character of every word
+"
+"  Foo bar, hash.    FXo bXr, hXXh.
+"    Haz (quux)?  ->   bXz (qXXx)?
+"    Hashbaz!          hXXXXXz!
+"
+let g:censor_pattern='\w\zs\w\+\ze\w'
 
-    " Show the first and last character of every word
-    "
-    "  Foo bar, hash.    FXo bXr, hXXh.
-    "    Haz (quux)?  ->   bXz (qXXx)?
-    "    Hashbaz!          hXXXXXz!
-    "
-    let g:unhance_pattern='\w\zs\w\+\ze\w'
+" Censor all non-whitespace characters
+"
+"  Foo bar, hash.    XXX XXXXX XXXXX
+"    Baz (quux)?  ->   XXX XXXXXXX
+"    Hashbaz!          XXXXXXXX
+"
+let g:censor_pattern='\S\+'
 
-    " Block out punctuation
-    "
-    "  Foo bar, hash.    XXX XXXXX XXXXX
-    "    Baz (quux)?  ->   XXX XXXXXXX
-    "    Hashbaz!          XXXXXXXX
-    "
-    let g:unhance_pattern='\S\+'
+" Censor words and the whitespace gaps between them
+"
+"  Foo bar, hash.    XXXXXXXXXXXXXXX
+"    Baz (quux)?  ->   XXXXXXXXXXX
+"    Hashbaz!          XXXXXXXX
+"
+" Use the |/\v| modifier to make the rest
+" of the pattern 'very magic':
+let g:censor_pattern='\v\S+%(\s\S+)*'
+```
 
-    " Block out word boundaries, too
-    "
-    "  Foo bar, hash.    XXXXXXXXXXXXXXX
-    "    Baz (quux)?  ->   XXXXXXXXXXX
-    "    Hashbaz!          XXXXXXXX
-    "
-    " Use the |/\v| modifier to make the rest
-    " of the pattern 'very magic':
-    let g:unhance_pattern='\v\S+%(\s{1,3}\S+)*'
+### `g:censor_concealcursor` (default: `'nciv'`)
 
-### `g:unhance_concealcursor`
+Modes in which the cursor's current line will be concealed.
 
-  - Type: `String`
-  - Default: `'nvic'`
+By default, censored items in the current line remain censored, even when
+you're in insert mode. However, there are alternatives:
 
-  Modes in which the cursor line will be concealed.
+```vim
+" Show censored items in the current line when inserting and in visual mode
+let g:censor_concealcursor='nc'
 
-  By default, the current line is obscured, even when you're editing it.
-  However, there are alternatives:
+" Always show censored items in the current line
+let g:censor_concealcursor=''
+```
 
-    " Show the current line when inserting and in visual mode
-    let g:unhance_concealcursor='nc'
+See vim's `concealcursor` for details.
 
-    " Always show the current line
-    let g:unhance_concealcursor=''
+### `g:censor_conceal_char` (default: none)
 
-  See 'concealcursor'.
+The character that will be used in place of obscured characters. If not
+specified, the default conceal character in `listchars` will be used. (By
+default, this is the space character.)
 
-### `g:unhance_conceal_char`
+See `:help :syn-cchar`.
 
-  - Type: `String` (only one character)
-  - Default: None (`v:null`)
+## Other tweaks
 
-  The character that will be used in place of obscured characters. If not
-  specified, the default conceal character in 'listchars' will be used.
+You can alter the highlighting of the censored text using the `Conceal`
+highlighting group (`:help hl-Conceal`):
 
-  See `:syn-cchar`.
+```vim
+" Remove highlighting entirely
+highlight Conceal NONE
+```
 
 ## Inspirations
 
  * [vim-veil](https://github.com/swordguin/vim-veil/)
+ * [vim-redacted](https://github.com/dbmrq/vim-redacted)
 

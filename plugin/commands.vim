@@ -1,1 +1,5 @@
-command -bang Unhance call unhance#execute(<bang>0)
+if &compatible || !has('syntax') || !has('conceal')
+  finish
+endif
+
+command -bang Censor call censor#execute(<bang>0)
