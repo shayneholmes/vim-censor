@@ -1,7 +1,5 @@
 " declare defaults
-let s:unhance_character='0-9a-zA-Z_'
-let s:unhance_show_first=0
-let s:unhance_show_last=0
+let s:unhance_pattern='\w\+'
 let s:unhance_concealcursor='nvic'
 let s:unhance_conceal_char=v:null
 
@@ -13,11 +11,7 @@ function! s:getSetting(name) abort
 endfunction
 
 function! s:createSyntaxRules() abort
-  let l:character = s:getSetting('unhance_character')
-
-  let l:show_first = s:getSetting('unhance_show_first')
-  let l:show_last = s:getSetting('unhance_show_last')
-  let l:min_match_size = 1 + l:show_first + l:show_last
+  let l:pattern = s:getSetting('unhance_pattern')
 
   let l:concealcursor = s:getSetting('unhance_concealcursor')
   let l:conceal_char = s:getSetting('unhance_conceal_char')
@@ -28,11 +22,8 @@ function! s:createSyntaxRules() abort
   endif
 
   exec 'syntax match UnhanceWord'
-        \ '"[' . l:character . ']\{' . l:min_match_size . ',\}"' .
-        \ 'ms=s+' . l:show_first .
-        \ ',me=e-' . l:show_last
+        \ '"' . l:pattern . '"'
         \ 'contains=UnhanceChar'
-        \ 'oneline'
   exec "syntax match UnhanceChar contained '.' conceal"
         \ l:conceal_char_def
 endfunction

@@ -48,28 +48,41 @@ Most options can be configured for an individual buffer by prefixing them with
 
   A collection of characters to be obscured, as used in a `/collection`.
 
-  Some useful non-default values:
+  Some interesting recipes:
 
-    " Obscure every character but whitespace
-    let g:unhance_character='^ \t'
+    " Block letters and numbers (default)
+    "
+    "  Foo bar, hash.    XXX XXX, XXXX.
+    "    Baz (quux)?  ->   XXX (XXXX)?
+    "    Hashbaz!          XXXXXXX!
+    "
+    let g:unhance_pattern='\w\+'
 
-    " Obscure more international characters
-    let g:unhance_character='a-zA-ZçÇâÂàÀéÉêÊèÈîÎôÔûÛùÙœ'
+    " Show the first and last character of every word
+    "
+    "  Foo bar, hash.    FXo bXr, hXXh.
+    "    Haz (quux)?  ->   bXz (qXXx)?
+    "    Hashbaz!          hXXXXXz!
+    "
+    let g:unhance_pattern='\w\zs\w\+\ze\w'
 
-### `g:unhance_show_first`
+    " Block out punctuation
+    "
+    "  Foo bar, hash.    XXX XXXXX XXXXX
+    "    Baz (quux)?  ->   XXX XXXXXXX
+    "    Hashbaz!          XXXXXXXX
+    "
+    let g:unhance_pattern='\S\+'
 
-  - Type: `Number`
-  - Default: `0`
-
-  When set to {n}, the first {n} characters in an obscured character group
-  (usually a word) will be shown. This gives extra context when obscured.
-
-### `g:unhance_show_last`
-  - Type: `Number`
-  - Default: `0`
-
-  When set to {n}, the last {n} characters in an obscured character group
-  (usually a word) will be shown. This gives extra context when obscured.
+    " Block out word boundaries, too
+    "
+    "  Foo bar, hash.    XXXXXXXXXXXXXXX
+    "    Baz (quux)?  ->   XXXXXXXXXXX
+    "    Hashbaz!          XXXXXXXX
+    "
+    " Use the |/\v| modifier to make the rest
+    " of the pattern 'very magic':
+    let g:unhance_pattern='\v\S+%(\s{1,3}\S+)*'
 
 ### `g:unhance_concealcursor`
 
