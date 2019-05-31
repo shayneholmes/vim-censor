@@ -6,8 +6,8 @@ let s:unhance_concealcursor='nvic'
 let s:unhance_conceal_char=v:null
 
 function! s:getSetting(name) abort
-  return get(g:, a:name,
-        \ get(b:, a:name,
+  return get(b:, a:name,
+        \ get(g:, a:name,
         \ get(s:, a:name,
         \ v:null)))
 endfunction
