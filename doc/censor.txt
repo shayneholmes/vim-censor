@@ -1,0 +1,133 @@
+*censor.txt*                                  🙈 See only what you want to see
+*censor*
+
+        ,p6"bo   .gP"Ya  `7MMpMMMb.   ,pP"Ybd   ,pW"Wq.  `7Mb,od8 ~
+       6M'  OO  ,M'   Yb   MM    MM   8I   `"  6W'   `Wb   MM' "' ~
+       8M       8M""""""   MM    MM   `YMMMa.  8M     M8   MM     ~
+       YM.    , YM.    ,   MM    MM   L.   I8  YA.   ,A9   MM     ~
+        YMbmd'   `Mbmmd' .JMML  JMML. M9mmmP'   `Ybmd9'  .JMML.   ~
+
+Author: Shayne Holmes <http://shayneholm.es/>
+Repo:   https://github.com/shayneholmes/vim-censor
+
+==============================================================================
+Summary                                                       *censor-summary*
+
+Censor hides the specified characters, so you can see they're there, but not
+read them. It uses vim's native |conceal| feature to physically hide the
+characters, as opposed to camouflaging them by printing them the same color as
+the background. When the words are censored, they won't be displayed on the
+terminal at all -- instead, they're replaced with the terminal.
+
+==============================================================================
+Frequently asked questions                                        *censor-faq*
+
+When would you use this?
+
+
+
+
+{1} http://www.naperwrimo.org/wiki/index.php?title=Vim_for_Writers
+
+==============================================================================
+Commands and usage
+
+:Censor                                                              *:Censor*
+
+  Toggle censor on and off.
+
+  You can easily map a keypress to it, like this: >
+    nnoremap <Leader>c :Censor<CR>
+<
+:Censor!
+
+  Turn censor off.
+
+==============================================================================
+Options                                                       *censor-options*
+
+Options don't immediately take effect: If you change an option while censor
+is on, you'll need to turn censor off and on again to see any change.
+
+Most options can be configured for an individual buffer by prefixing them with
+|b:| instead of |g:|.
+
+g:censor_pattern                                            *g:censor_pattern*
+                                                            *b:censor_pattern*
+  Type: |String|
+  Default: `'\w\+'`
+
+  Pattern that should be blocked out.
+
+  Some interesting recipes: >
+
+    " Block letters and numbers (default)
+    "
+    "  Foo bar, hash.    XXX XXX, XXXX.
+    "    Baz (quux)?  ->   XXX (XXXX)?
+    "    Hashbaz!          XXXXXXX!
+    "
+    let g:censor_pattern='\w\+'
+
+    " Show the first and last character of every word
+    "
+    "  Foo bar, hash.    FXo bXr, hXXh.
+    "    Haz (quux)?  ->   bXz (qXXx)?
+    "    Hashbaz!          hXXXXXz!
+    "
+    let g:censor_pattern='\w\zs\w\+\ze\w'
+
+    " Block out punctuation
+    "
+    "  Foo bar, hash.    XXX XXXXX XXXXX
+    "    Baz (quux)?  ->   XXX XXXXXXX
+    "    Hashbaz!          XXXXXXXX
+    "
+    let g:censor_pattern='\S\+'
+
+    " Block out word boundaries, too
+    "
+    "  Foo bar, hash.    XXXXXXXXXXXXXXX
+    "    Baz (quux)?  ->   XXXXXXXXXXX
+    "    Hashbaz!          XXXXXXXX
+    "
+    " Use the |/\v| modifier to make the rest
+    " of the pattern 'very magic':
+    let g:censor_pattern='\v\S+%(\s{1,3}\S+)*'
+<
+g:censor_concealcursor                                *g:censor_concealcursor*
+                                                      *b:censor_concealcursor*
+  Type: |String|
+  Default: `'nvic'`
+
+  Modes in which the cursor line will be concealed.
+
+  By default, the current line is obscured, even when you're editing it.
+  However, there are alternatives: >
+
+    " Show the current line when inserting and in visual mode
+    let g:censor_concealcursor='nc'
+
+    " Always show the current line
+    let g:censor_concealcursor=''
+<
+  See 'concealcursor'.
+
+ g:censor_conceal_char                                 *g:censor_conceal_char*
+                                                       *b:censor_conceal_char*
+  Type: |String| (only one character)
+  Default: None (|v:null|)
+
+  The character that will be used in place of obscured characters. If not
+  specified, the default conceal character in 'listchars' will be used.
+
+  See |:syn-cchar|.
+
+==============================================================================
+Inspirations
+
+ * vim-veil: https://github.com/swordguin/vim-veil
+ * vim-redacted: https://github.com/dbmrq/vim-redacted
+
+==============================================================================
+vim:tw=78:sw=2:ts=2:et:ft=help:norl:nowrap:
