@@ -2,6 +2,7 @@
 let s:censor_pattern='\w\+'
 let s:censor_concealcursor='nvic'
 let s:censor_replacement_char=v:null
+let s:censor_highlight_def=v:null
 
 function! s:getSetting(name) abort
   return get(b:, a:name,
@@ -29,18 +30,33 @@ function! s:createSyntaxRules() abort
         \ l:conceal_char_def
 endfunction
 
+function! s:setConcealHighlight()
+  let l:highlight_def = s:getSetting('censor_highlight_def')
+  if empty(l:highlight_def)
+    return
+  endif
+  exec 'highlight Conceal' l:highlight_def
+endfunction
+
 function! s:saveSettings() abort
   let b:censor_restore={
         \ 'syntax': &l:syntax,
         \ 'conceallevel': &l:conceallevel,
         \ 'concealcursor': &l:concealcursor,
         \}
+  if !empty(s:getSetting('censor_highlight_def'))
+    let b:censor_restore['highlight'] =
+          \ censor#highlightSave#backup(['Conceal'])
+  endif
 endfunction
 
 function! s:restoreSettings() abort
   let &l:syntax=b:censor_restore['syntax']
   let &l:conceallevel=b:censor_restore['conceallevel']
   let &l:concealcursor=b:censor_restore['concealcursor']
+  if has_key(b:censor_restore, 'highlight')
+    call censor#highlightSave#restore(b:censor_restore['highlight'])
+  endif
   unlet b:censor_restore
 endfunction
 
@@ -51,6 +67,7 @@ function! s:activate() abort
   setlocal conceallevel=1
   let &l:concealcursor='nciv'
   call s:createSyntaxRules()
+  call s:setConcealHighlight()
 endfunction
 
 function! s:deactivate() abort

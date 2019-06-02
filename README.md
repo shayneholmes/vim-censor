@@ -122,22 +122,18 @@ let g:censor_concealcursor=''
 
 See vim's `concealcursor` for details.
 
-## Appearance
+### `g:censor_highlight_def` (default: none)
 
-Adjusting what censored text looks like is beyond the scope of this plugin,
-but vim has its own resources to help with that; see `:help hl-Conceal`.
-
-A couple of recipes:
+An optional definition of highlighting for censored characters. Changes the
+highlighting of the `Conceal` group; see `help hl-Conceal`. The original value
+will be restored when censor is disabled.
 
 ```vim
 " Remove highlighting entirely
-highlight Conceal NONE
-
-" Replace censored characters with 'X'
-set listchars+=conceal:X
+let g:censor_highlight_def = NONE
 ```
 
-Note that highlighting and `'listchars'` are both global and so can't be altered per buffer.
+Note that highlighting is global and so can't be altered per buffer.
 
 ## Inspirations
 
