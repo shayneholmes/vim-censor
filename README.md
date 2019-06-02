@@ -92,11 +92,16 @@ interpreted as though `'magic'` is set; see `:help :syn-pattern`.
 Change this to get different censoring behavior; see [Recipes](#recipes),
 above.
 
-### `g:censor_conceal_char` (default: none)
+### `g:censor_replacement_char` (default: none)
 
 The character that will be used in place of obscured characters. If not
 specified, the default conceal character in `listchars` will be used. (By
 default, this is the space character.)
+
+```vim
+" Use the letter 'X' to replace censored characters
+let g:censor_replacement_char = 'X'
+```
 
 See `:help :syn-cchar`.
 

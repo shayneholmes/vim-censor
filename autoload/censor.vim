@@ -1,7 +1,7 @@
 " declare defaults
 let s:censor_pattern='\w\+'
 let s:censor_concealcursor='nvic'
-let s:censor_conceal_char=v:null
+let s:censor_replacement_char=v:null
 
 function! s:getSetting(name) abort
   return get(b:, a:name,
@@ -15,11 +15,11 @@ function! s:createSyntaxRules() abort
   let l:pattern = s:getSetting('censor_pattern')
 
   let l:concealcursor = s:getSetting('censor_concealcursor')
-  let l:conceal_char = s:getSetting('censor_conceal_char')
-  if empty(l:conceal_char)
+  let l:replacement_char = s:getSetting('censor_replacement_char')
+  if empty(l:replacement_char)
     let l:conceal_char_def = ''
   else
-    let l:conceal_char_def = 'cchar=' . l:conceal_char
+    let l:conceal_char_def = 'cchar=' . l:replacement_char
   endif
 
   exec 'syntax match CensoredWord'
