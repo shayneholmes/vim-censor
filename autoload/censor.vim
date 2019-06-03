@@ -12,6 +12,17 @@ function! s:getSetting(name) abort
         \ v:null))))
 endfunction
 
+function! s:validateOptions() abort
+  let l:pattern = s:getSetting('censor_pattern')
+  let l:concealcursor = s:getSetting('censor_concealcursor')
+  let l:replacement_char = s:getSetting('censor_replacement_char')
+  if !empty(l:replacement_char) && strdisplaywidth(l:replacement_char) > 1
+    echomsg 'Error: replacement char is' "'".l:replacement_char."'" ', but must be only 1 character long'
+    return v:false
+  endif
+  return v:true
+endfunction
+
 function! s:createSyntaxRules() abort
   let l:pattern = s:getSetting('censor_pattern')
 
@@ -61,6 +72,10 @@ function! s:restoreSettings() abort
 endfunction
 
 function! s:activate() abort
+  if !s:validateOptions()
+    return
+  end
+
   let b:censor_active = 1
   call s:saveSettings()
   setlocal syntax=text
