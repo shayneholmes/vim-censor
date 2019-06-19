@@ -135,6 +135,32 @@ let g:censor_highlight_def = NONE
 
 Note that highlighting is global and so can't be altered per buffer.
 
+### Callbacks
+
+If you want to run additional commands when toggling censoring, you can do
+this with the `CensorEnter` and `CensorLeave` events:
+
+- `CensorEnter` runs just _after_ enabling censoring
+- `CensorLeave` runs just _before_ disabling censoring
+
+This pattern is similar to e.g. `TabEnter` and `TabLeave`.
+
+Some examples:
+
+```vim
+# Show the cursor column when censored
+autocmd! User CensorEnter setl cursorcolumn
+autocmd! User CensorLeave set cursorcolumn<
+
+# Get fancy: Show capitals vs lower-case
+function! s:censor_enter()
+  syn match CensoredChar '[a-z]' conceal cchar=x
+  syn match CensoredChar '[A-Z]' conceal cchar=X
+endfunction
+
+autocmd! User CensorEnter call <SID>censor_enter()
+```
+
 ## Inspirations
 
  * [vim-veil](https://github.com/swordguin/vim-veil/)

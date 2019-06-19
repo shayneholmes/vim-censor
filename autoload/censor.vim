@@ -83,10 +83,16 @@ function! s:activate() abort
   let &l:concealcursor='nciv'
   call s:createSyntaxRules()
   call s:setConcealHighlight()
+  if exists('#User#CensorEnter')
+    doautocmd User CensorEnter
+  endif
 endfunction
 
 function! s:deactivate() abort
   unlet b:censor_active
+  if exists('#User#CensorLeave')
+    doautocmd User CensorLeave
+  endif
   syntax clear CensoredChar CensoredWord
   call s:restoreSettings()
 endfunction
